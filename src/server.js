@@ -1,6 +1,7 @@
 import http from 'node:http';
 import { json } from './middlewares/json.js';
 import { routes } from './routes/index.js';
+import { extractQueryParams } from './utils/extract-query-params.js';
 
 const PORT = 3333;
 
