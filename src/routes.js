@@ -81,4 +81,20 @@ export const routes = [
 			return res.writeHead(200).end(JSON.stringify(updatedTask));
 		},
 	},
+	{
+		method: 'PATCH',
+		path: buildRoutePath('/tasks/:id/complete'),
+		handler: (req, res) => {
+			const { id } = req.params;
+			const taskWithStatus = database.update('PATCH', 'tasks', id);
+			if (!taskWithStatus) {
+				const errorMessage = 'Tarefa não encontrada';
+				return res
+					.writeHead(404)
+					.end(JSON.stringify({ message: errorMessage }));
+			}
+
+			return res.writeHead(200).end(JSON.stringify(taskWithStatus));
+		},
+	},
 ];

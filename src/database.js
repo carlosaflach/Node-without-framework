@@ -70,5 +70,20 @@ export class Database {
 
 			return updatedTask;
 		}
+		if (method === 'PATCH') {
+			if (taskExists['completed_at']) {
+				taskExists['completed_at'] = null;
+			} else {
+				taskExists['completed_at'] = Date.now();
+			}
+
+			const taskWithCompleteStatus = this.#database[table].find(
+				(task) => task.id === id
+			);
+			const rowIndex = this.#database[table].findIndex((row) => row.id === id);
+			this.#database[table][rowIndex] = { ...taskWithCompleteStatus };
+			this.#persist();
+			return taskWithCompleteStatus;
+		}
 	}
 }
