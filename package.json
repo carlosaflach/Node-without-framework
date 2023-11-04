@@ -11,5 +11,8 @@
     "Node.js"
   ],
   "author": "Carlos A. Flach",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "csv-parse": "^5.5.2"
+  }
 }
