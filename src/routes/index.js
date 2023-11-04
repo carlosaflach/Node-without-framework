@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
-import { buildRoutePath } from './utils/build-route-path.js';
-import { Database } from './database.js';
+import { Database } from '../database.js';
+import { buildRoutePath } from '../utils/build-path-route.js';
 
 const database = new Database();
 
@@ -21,7 +21,7 @@ export const routes = [
 
 			database.insert('tasks', task);
 
-			return res.writeHead(201).end();
+			return res.writeHead(201).end(JSON.stringify(task));
 		},
 	},
 ];

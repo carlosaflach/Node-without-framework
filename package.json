@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "This is node project withouy any framework",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "node --watch src/server.js"
   },
