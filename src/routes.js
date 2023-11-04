@@ -40,7 +40,7 @@ export const routes = [
 					: null
 			);
 
-			return res.end(JSON.stringify(users));
+			return res.writeHead(200).end(JSON.stringify(users));
 		},
 	},
 	{
@@ -50,6 +50,25 @@ export const routes = [
 			const { id } = req.params;
 			database.delete('tasks', id);
 			return res.writeHead(204).end();
+		},
+	},
+	{
+		method: 'PUT',
+		path: buildRoutePath('/tasks/:id'),
+		handler: (req, res) => {
+			const { id } = req.params;
+			const targetToUpdate = req.body.title ? 'title' : 'description';
+			const updatedTask = database.update('PUT', 'tasks', id, {
+				target: targetToUpdate,
+				info: req.body[targetToUpdate],
+			});
+
+			if (!updatedTask) {
+				const errorMessage = 'Tarefa não encontrada';
+				return res.writeHead(404).end(JSON.stringify(errorMessage));
+			}
+
+			return res.writeHead(200).end(JSON.stringify(updatedTask));
 		},
 	},
 ];

@@ -53,4 +53,22 @@ export class Database {
 			this.#persist();
 		}
 	}
+
+	update(method, table, id, data) {
+		const taskExists = this.#database[table].find((task) => task.id === id);
+		if (!taskExists) {
+			return taskExists;
+		}
+		if (method === 'PUT') {
+			const { target, info } = data;
+			taskExists[target] = info;
+			taskExists['updated_at'] = Date.now();
+			const updatedTask = this.#database[table].find((task) => task.id === id);
+			const rowIndex = this.#database[table].findIndex((row) => row.id === id);
+			this.#database[table][rowIndex] = { ...updatedTask };
+			this.#persist();
+
+			return updatedTask;
+		}
+	}
 }
