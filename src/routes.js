@@ -57,6 +57,14 @@ export const routes = [
 		path: buildRoutePath('/tasks/:id'),
 		handler: (req, res) => {
 			const { id } = req.params;
+			if (!req.body) {
+				const errorMessage =
+					'Por favor adicione o titulo ou a descricao que deseja alterar';
+				return res
+					.writeHead(400)
+					.end(JSON.stringify({ message: errorMessage }));
+			}
+
 			const targetToUpdate = req.body.title ? 'title' : 'description';
 			const updatedTask = database.update('PUT', 'tasks', id, {
 				target: targetToUpdate,
@@ -65,7 +73,9 @@ export const routes = [
 
 			if (!updatedTask) {
 				const errorMessage = 'Tarefa não encontrada';
-				return res.writeHead(404).end(JSON.stringify(errorMessage));
+				return res
+					.writeHead(404)
+					.end(JSON.stringify({ message: errorMessage }));
 			}
 
 			return res.writeHead(200).end(JSON.stringify(updatedTask));
